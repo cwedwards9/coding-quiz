@@ -1,0 +1,55 @@
+body {
+    padding: 10px;
+    background-color: #fff;
+    font-family: 'Raleway', sans-serif;
+}
+
+/* ---------------------------------------- */
+#info {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+
+#startScreen {
+    width: 500px;
+    margin: 0 auto;
+}
+
+#title {
+    text-align: center;
+}
+
+#instructions {
+    text-align: center;
+    line-height: 30px;
+    margin-bottom: 25px;
+}
+
+
+/* ---------------------------------------- */
+#questionDisplay {
+    width: 500px;
+    margin: 0 auto;
+}
+
+#question {
+    text-align: center;
+}
+
+button {
+    display: block;
+    margin: 10px auto;
+    width: 100px;
+    border: 1px solid purple;
+    border-radius: 20px;
+    color: purple;
+    background-color: #fff;
+    padding: 10px;
+}
+
+button:hover {
+    color: #fff;
+    background-color: purple;
+}
