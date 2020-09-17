@@ -10,7 +10,7 @@
 <body>
     <div id="info">
         <p>View Highscores</p>
-        <p>Time: 0</p>
+        <p>Time: <span id="timerDisplay">100</span></p>
     </div>
     <main class="container">
         <section id="startScreen">
@@ -22,13 +22,25 @@
         </section>
 
         <section id="questionDisplay">
-            <p id="question">Commonly used data types DO NOT include:</p>
-            <button class="choice">strings</button>
-            <button class="choice">booleans</button>
-            <button class="choice">alerts</button>
-            <button class="choice">numbers</button>
+            <p id="question"></p>
+            <div id="choices">
+
+            </div>
+        </section>
+
+        <section id="doneDisplay">
+            <h1>All Done!</h1>
+            <p>Your score is: <span id="playerScore">0</span></p>
+            <p>Please enter your initials:</p>
+            <div>
+                <input type="text">
+            </div>
+            <button id="submitPlayerScore">Submit</button>
         </section>
         
     </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="script.js"></script>
 </body>
 </html>
