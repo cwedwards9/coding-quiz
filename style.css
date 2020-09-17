@@ -38,15 +38,37 @@ body {
     text-align: center;
 }
 
+/* ---------------------------------------- */
+
+#doneDisplay {
+    width: 500px;
+    margin: 0 auto;
+}
+
+#doneDisplay h1, p, div {
+    text-align: center;
+}
+
+#doneDisplay div input {
+    width: 300px;
+    margin-bottom: 25px;
+}
+
+
+
+
+/* ---------------------------------------- */
+
 button {
     display: block;
     margin: 10px auto;
-    width: 100px;
+    min-width: 100px;
     border: 1px solid purple;
     border-radius: 20px;
     color: purple;
     background-color: #fff;
     padding: 10px;
+    outline: none;
 }
 
 button:hover {
