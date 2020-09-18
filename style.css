@@ -7,9 +7,17 @@ body {
 /* ---------------------------------------- */
 #info {
     display: flex;
-    flex-direction: row;
+    flex-direction: row-reverse;
     flex-wrap: nowrap;
     justify-content: space-between;
+}
+
+#viewScoresLink {
+    color: purple;
+}
+#viewScoresLink:hover {
+    opacity: 0.75;
+    cursor: pointer;
 }
 
 #startScreen {
@@ -36,6 +44,8 @@ body {
 
 #question {
     text-align: center;
+    line-height: 30px;
+    margin-bottom: 25px;
 }
 
 /* ---------------------------------------- */
@@ -55,9 +65,30 @@ body {
 }
 
 
+/* ---------------------------------------- */
 
+#scoresDisplay {
+    width: 500px;
+    margin: 0 auto;
+}
+
+#scoresDisplay h1 {
+    text-align: center;
+}
+
+#scoresList p {
+    width: 250px;
+    margin: 0 auto;
+    background-color: gray;
+}
+
+#scoresList p:nth-of-type(2n){
+    background-color: #fff;
+}
 
 /* ---------------------------------------- */
+
+
 
 button {
     display: block;
@@ -69,6 +100,7 @@ button {
     background-color: #fff;
     padding: 10px;
     outline: none;
+    transition: all 0.3s linear;
 }
 
 button:hover {
