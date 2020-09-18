@@ -9,9 +9,10 @@
 </head>
 <body>
     <div id="info">
-        <p>View Highscores</p>
-        <p>Time: <span id="timerDisplay">100</span></p>
+        <p id="timerDisplay">Time: <span id="timerCount">100</span></p>
+        <p id="viewScoresLink">View Highscores</p>
     </div>
+
     <main class="container">
         <section id="startScreen">
             <h1 id="title">Coding Quiz Challenge</h1>
@@ -24,7 +25,6 @@
         <section id="questionDisplay">
             <p id="question"></p>
             <div id="choices">
-
             </div>
         </section>
 
@@ -33,9 +33,17 @@
             <p>Your score is: <span id="playerScore">0</span></p>
             <p>Please enter your initials:</p>
             <div>
-                <input type="text">
+                <input type="text" id="userInitials">
             </div>
             <button id="submitPlayerScore">Submit</button>
+        </section>
+
+        <section id="scoresDisplay">
+            <h1>Leaderboards</h1>
+            <div id="scoresList">
+            </div>
+            <button id="btnBack">Go Back</button>
+            <button>Clear Scores</button>
         </section>
         
     </main>
