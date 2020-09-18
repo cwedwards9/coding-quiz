@@ -1,16 +1,20 @@
 $(document).ready(function(){
     
     var questionIndex = 0;
+    var userScore = 0;
+    var timerNum = 100;
 
-    // hide question display and done display on page load
+    // hide question display, done display, and scores display on page load
     $("#questionDisplay").hide();
     $("#doneDisplay").hide();
+    $("#scoresDisplay").hide();
 
 
     // clicking the start quiz button
     $("#btnStart").on("click", function(){
-        // hide start screen
+        // hide start screen and high scores link
         $("#startScreen").hide();
+        $("#viewScoresLink").hide();
 
         // show question display
         $("#questionDisplay").show();
@@ -26,22 +30,66 @@ $(document).ready(function(){
 
     // clicking any button choice will give us right/wrong and will retrieve next question
     $("div#choices").on("click", "button", function(){
+        // capture specific button clicked
+        var btnSelected = $(this).val();
+        console.log("selected button: " + btnSelected);
         // retrieve question
         questionIndex++;
-        getQuestion(questionIndex);
+        getQuestion(questionIndex, btnSelected);
+    });
+
+
+    // clicking the submit button submits score to the leaderboards
+    $("#submitPlayerScore").on("click", function(){
+        $("#doneDisplay").hide();
+        $("#scoresDisplay").show();
+
+        // update user initials
+        var userInitials = $("#userInitials").val();
+        $("#scoresList").append("<p>" + userInitials + " - " + userScore + "</p>");
+    });
+
+    // clicking the 'view highscores' link takes you directly to the leaderbords from any point of the quiz
+    $("#viewScoresLink").on("click", function(){
+        $("#startScreen").hide();
+        $("#scoresDisplay").show();
+    });
+
+
+    // clicking the back button on the scores list takes you back to the start screen
+    $("#btnBack").on("click", function(){
+        $("#scoresDisplay").hide();
+        $("#startScreen").show();
+        $("#viewScoresLink").show();
+
+        // reset variables for a new game
+        questionIndex = 0;
+        userScore = 0;
+        timerNum = 100;
+        $("#timerCount").text(timerNum);
     });
 
 
     // question function
-    function getQuestion(index){
+    function getQuestion(index, btnSelected=""){
+
+         // prevents comparison when the start quiz button is clicked
+         if(index !== 0){
+            // correct answer variable
+            var currentAnswer = questions[index - 1].answer;
+
+            // track points
+            if(btnSelected === currentAnswer){
+                userScore += 10;
+            }
+        }
 
         // remove answers from last question
         $("#choices").empty();
 
-        // Finish game
+        // Finish game after question 10 (index 9)
         if(index > 9){
             finishGame();
-            // timerCountdown();
             return;
         }
 
@@ -62,24 +110,29 @@ $(document).ready(function(){
         }
     }
 
+
+    
     function finishGame(){
         // hide the question display
         $("#questionDisplay").hide();
 
         // show the all done display
         $("#doneDisplay").show();
+        $("#playerScore").text(userScore);
     }
+
+
 
     // timer function
     function timerCountdown(){
-        var num = 100
+        var timerNum = 100
         var timerId = setInterval(function(){
-            num--;
-            $("#timerDisplay").text(num);
+            timerNum--;
+            $("#timerCount").text(timerNum);
 
-            if(num === 0){
+            if(timerNum === 0 || questionIndex > 9){
                 clearInterval(timerId);
-
+                finishGame();
             }
         }, 1000);
     }
