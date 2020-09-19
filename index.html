@@ -9,14 +9,14 @@
 </head>
 <body>
     <div id="info">
-        <p id="timerDisplay">Time: <span id="timerCount">100</span></p>
+        <p id="timerDisplay">Time: <span id="timerCount">60</span></p>
         <p id="viewScoresLink">View Highscores</p>
     </div>
 
     <main class="container">
         <section id="startScreen">
             <h1 id="title">Coding Quiz Challenge</h1>
-            <p id="instructions">Try to answer the following code-related questions within the time limit. You will have 100 seconds to answer
+            <p id="instructions">Try to answer the following code-related questions within the time limit. You will have 60 seconds to answer
             a total of 10 questions. Incorrect answers will penalize you by 10 seconds. Good luck!
             </p>
             <button id="btnStart">Start Quiz!</button>
@@ -26,6 +26,7 @@
             <p id="question"></p>
             <div id="choices">
             </div>
+            <p id="feedback"></p>
         </section>
 
         <section id="doneDisplay">
@@ -43,7 +44,7 @@
             <div id="scoresList">
             </div>
             <button id="btnBack">Go Back</button>
-            <button>Clear Scores</button>
+            <button id="clearScores">Clear Scores</button>
         </section>
         
     </main>
