@@ -1,9 +1,10 @@
-$(document).ready(function(){
-    
+    // gloabal variables
     var questionIndex = 0;
     var userScore = 0;
-    var timerNum = 100;
+    var timerNum = 60;
+    var allScores = [];
 
+    
     // hide question display, done display, and scores display on page load
     $("#questionDisplay").hide();
     $("#doneDisplay").hide();
@@ -32,7 +33,7 @@ $(document).ready(function(){
     $("div#choices").on("click", "button", function(){
         // capture specific button clicked
         var btnSelected = $(this).val();
-        console.log("selected button: " + btnSelected);
+        
         // retrieve question
         questionIndex++;
         getQuestion(questionIndex, btnSelected);
@@ -44,16 +45,41 @@ $(document).ready(function(){
         $("#doneDisplay").hide();
         $("#scoresDisplay").show();
 
-        // update user initials
-        var userInitials = $("#userInitials").val();
-        $("#scoresList").append("<p>" + userInitials + " - " + userScore + "</p>");
+        // user scores
+        var userInitials = $("#userInitials").val().trim();
+
+        if(userInitials !== ""){
+            var highscores = JSON.parse(window.localStorage.getItem("highscores")) || [];
+            var newScore = {
+                name: userInitials, 
+                score: userScore
+            };
+            
+            allScores.push(newScore);
+            highscores.push(newScore);
+            window.localStorage.setItem("highscores", JSON.stringify(highscores));
+
+            $("#scoresList").empty();
+           for(var i = 0; i < allScores.length; i++){
+               $("#scoresList").append("<p>" + allScores[i].name + " - " + allScores[i].score + "</p>");
+    
+               localStorage.setItem(allScores[i].name, allScores[i].score);
+           }
+        }
     });
+
 
     // clicking the 'view highscores' link takes you directly to the leaderbords from any point of the quiz
     $("#viewScoresLink").on("click", function(){
         $("#startScreen").hide();
         $("#scoresDisplay").show();
     });
+
+
+    // clears the scores list in scores display
+    $("#clearScores").on("click", function(){
+        $("#scoresList").empty();
+    })
 
 
     // clicking the back button on the scores list takes you back to the start screen
@@ -65,12 +91,12 @@ $(document).ready(function(){
         // reset variables for a new game
         questionIndex = 0;
         userScore = 0;
-        timerNum = 100;
+        timerNum = 60;
         $("#timerCount").text(timerNum);
     });
 
 
-    // question function
+    // get the question and answers 
     function getQuestion(index, btnSelected=""){
 
          // prevents comparison when the start quiz button is clicked
@@ -78,36 +104,40 @@ $(document).ready(function(){
             // correct answer variable
             var currentAnswer = questions[index - 1].answer;
 
-            // track points
+            $("#feedback").show();
+
+            // track points and display feedback for answer
             if(btnSelected === currentAnswer){
                 userScore += 10;
+                $("#feedback").text("Correct!");
+            } else {
+                $("#feedback").text("Incorrect!");
+                timerNum -= 10;
+            }
+            $("#feedback").delay(550).fadeOut();
+        }
+
+        if(index <= 9){
+             // remove any answers from last question
+            $("#choices").empty();
+
+            // populate question in question tag
+            var currentQuestion = questions[index].question;
+            $("#question").text(index + 1 + ".  " + currentQuestion);
+
+            var currentChoices = questions[index].choices;
+
+            // create button choices for question
+            for(var i = 0; i < currentChoices.length; i++){
+                var newChoice = $("<button>");
+                newChoice.addClass("btnChoice");
+                newChoice.attr("value", currentChoices[i]);
+                newChoice.text(currentChoices[i]);
+                
+                $("#choices").append(newChoice);
             }
         }
-
-        // remove answers from last question
-        $("#choices").empty();
-
-        // Finish game after question 10 (index 9)
-        if(index > 9){
-            finishGame();
-            return;
-        }
-
-        // populate question in question tag
-        var currentQuestion = questions[index].question;
-        $("#question").text(currentQuestion);
-
-        var currentChoices = questions[index].choices;
-
-        // create choices
-        for(var i = 0; i < currentChoices.length; i++){
-            var newChoice = $("<button>");
-            newChoice.addClass("btnChoice");
-            newChoice.attr("value", currentChoices[i]);
-            newChoice.text(currentChoices[i]);
-            
-            $("#choices").append(newChoice);
-        }
+       
     }
 
 
@@ -116,7 +146,7 @@ $(document).ready(function(){
         // hide the question display
         $("#questionDisplay").hide();
 
-        // show the all done display
+        // show the all done display and display the user's score
         $("#doneDisplay").show();
         $("#playerScore").text(userScore);
     }
@@ -125,7 +155,6 @@ $(document).ready(function(){
 
     // timer function
     function timerCountdown(){
-        var timerNum = 100
         var timerId = setInterval(function(){
             timerNum--;
             $("#timerCount").text(timerNum);
@@ -136,8 +165,6 @@ $(document).ready(function(){
             }
         }, 1000);
     }
-
-
 
 
     // questions array
@@ -174,8 +201,8 @@ $(document).ready(function(){
         },
         {
             question: "Which of the following is not a primitive data type in JavaScript?",
-            choices: ["String", "Null", "Undefined", "Decimal"],
-            answer: "Decimal"
+            choices: ["String", "Null", "Undefined", "Char"],
+            answer: "Char"
         },
         {
             question: 'x = 99. True or false: x == "99"',
@@ -193,4 +220,3 @@ $(document).ready(function(){
             answer: '$("img")'
         }
     ]
-});
