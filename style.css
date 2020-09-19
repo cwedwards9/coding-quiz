@@ -4,7 +4,6 @@ body {
     font-family: 'Raleway', sans-serif;
 }
 
-/* ---------------------------------------- */
 #info {
     display: flex;
     flex-direction: row-reverse;
@@ -13,13 +12,31 @@ body {
 }
 
 #viewScoresLink {
-    color: purple;
+    color: #BF5FFF;
 }
 #viewScoresLink:hover {
     opacity: 0.75;
     cursor: pointer;
 }
 
+button {
+    display: block;
+    margin: 10px auto;
+    min-width: 100px;
+    border: 1px solid #BF5FFF;
+    border-radius: 20px;
+    color:#BF5FFF;
+    background-color: #fff;
+    padding: 10px;
+    outline: none;
+    transition: all 0.3s linear;
+}
+button:hover {
+    color: #fff;
+    background-color: #BF5FFF;
+}
+
+/* ----- start screen display ----- */
 #startScreen {
     width: 500px;
     margin: 0 auto;
@@ -36,10 +53,11 @@ body {
 }
 
 
-/* ---------------------------------------- */
+/* ----- question screen display ----- */
 #questionDisplay {
     width: 500px;
     margin: 0 auto;
+    display: none;
 }
 
 #question {
@@ -48,11 +66,12 @@ body {
     margin-bottom: 25px;
 }
 
-/* ---------------------------------------- */
+/* ----- done screen display ----- */
 
 #doneDisplay {
     width: 500px;
     margin: 0 auto;
+    display: none;
 }
 
 #doneDisplay h1, p, div {
@@ -65,45 +84,29 @@ body {
 }
 
 
-/* ---------------------------------------- */
+/* ----- score screen display ----- */
 
 #scoresDisplay {
     width: 500px;
     margin: 0 auto;
+    display: none;
 }
 
 #scoresDisplay h1 {
     text-align: center;
 }
 
+#scoresList {
+    border: 1px solid black;
+    min-height: 100px;
+}
+
 #scoresList p {
-    width: 250px;
+    width: 100%;
     margin: 0 auto;
     background-color: gray;
 }
 
 #scoresList p:nth-of-type(2n){
     background-color: #fff;
-}
-
-/* ---------------------------------------- */
-
-
-
-button {
-    display: block;
-    margin: 10px auto;
-    min-width: 100px;
-    border: 1px solid purple;
-    border-radius: 20px;
-    color: purple;
-    background-color: #fff;
-    padding: 10px;
-    outline: none;
-    transition: all 0.3s linear;
-}
-
-button:hover {
-    color: #fff;
-    background-color: purple;
 }
