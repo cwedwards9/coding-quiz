@@ -2,13 +2,25 @@
     var questionIndex = 0;
     var userScore = 0;
     var timerNum = 60;
-    var allScores = [];
+    var allScores = JSON.parse(window.localStorage.getItem("allScores")) || [];
 
     
     // hide question display, done display, and scores display on page load
     $("#questionDisplay").hide();
     $("#doneDisplay").hide();
     $("#scoresDisplay").hide();
+
+
+    // clicking the 'view highscores' link takes you directly to the leaderbords from any point of the quiz
+    $("#viewScoresLink").on("click", function(){
+        $("#startScreen").hide();
+        $("#scoresDisplay").show();
+
+        $("#scoresList").empty();
+        for(var i = 0; i < allScores.length; i++){
+            $("#scoresList").append("<p>" + allScores[i].name + " - " + allScores[i].score + "</p>");
+        }
+    });
 
 
     // clicking the start quiz button
@@ -45,40 +57,15 @@
         $("#doneDisplay").hide();
         $("#scoresDisplay").show();
 
-        // user scores
-        var userInitials = $("#userInitials").val().trim();
-
-        if(userInitials !== ""){
-            var highscores = JSON.parse(window.localStorage.getItem("highscores")) || [];
-            var newScore = {
-                name: userInitials, 
-                score: userScore
-            };
-            
-            allScores.push(newScore);
-            highscores.push(newScore);
-            window.localStorage.setItem("highscores", JSON.stringify(highscores));
-
-            $("#scoresList").empty();
-           for(var i = 0; i < allScores.length; i++){
-               $("#scoresList").append("<p>" + allScores[i].name + " - " + allScores[i].score + "</p>");
-    
-               localStorage.setItem(allScores[i].name, allScores[i].score);
-           }
-        }
+        saveScores();
     });
 
 
-    // clicking the 'view highscores' link takes you directly to the leaderbords from any point of the quiz
-    $("#viewScoresLink").on("click", function(){
-        $("#startScreen").hide();
-        $("#scoresDisplay").show();
-    });
-
-
-    // clears the scores list in scores display
+    // clears the scores list and the local storage in scores display
     $("#clearScores").on("click", function(){
         $("#scoresList").empty();
+
+        localStorage.clear();
     })
 
 
@@ -137,9 +124,31 @@
                 $("#choices").append(newChoice);
             }
         }
-       
     }
 
+
+    function saveScores(){
+        // select current user score
+        var userInitials = $("#userInitials").val().trim();
+
+        if(userInitials !== "" && userInitials.length < 3){
+            var newScore = {
+                name: userInitials, 
+                score: userScore
+            };
+            
+            // push new user score into all scores array and save to local storage
+            allScores.push(newScore);
+            localStorage.setItem("allScores", JSON.stringify(allScores));
+            
+            // remove all existing scores but then repopulate with new current score
+            $("#scoresList").empty();
+            for(var i = 0; i < allScores.length; i++){
+                $("#scoresList").append("<p>" + allScores[i].name + " - " + allScores[i].score + "</p>");
+            }
+            
+        }
+    }
 
     
     function finishGame(){
@@ -152,14 +161,13 @@
     }
 
 
-
     // timer function
     function timerCountdown(){
         var timerId = setInterval(function(){
             timerNum--;
             $("#timerCount").text(timerNum);
 
-            if(timerNum === 0 || questionIndex > 9){
+            if(timerNum <= 0 || questionIndex > 9){
                 clearInterval(timerId);
                 finishGame();
             }
