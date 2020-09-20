@@ -66,6 +66,10 @@ button:hover {
     margin-bottom: 25px;
 }
 
+#feedback {
+    font-size: 30px;
+}
+
 /* ----- done screen display ----- */
 
 #doneDisplay {
@@ -98,15 +102,23 @@ button:hover {
 
 #scoresList {
     border: 1px solid black;
+    border-radius: 10px;
     min-height: 100px;
+    width: 250px;
+    margin: 0 auto;
 }
 
 #scoresList p {
     width: 100%;
+    /* box-sizing: border-box; */
     margin: 0 auto;
-    background-color: gray;
+    background-color: #fff;
+    padding: 5px 0;
+}
+#scoresList p:first-of-type {
+    border-radius: 10px;
 }
 
 #scoresList p:nth-of-type(2n){
-    background-color: #fff;
+    background-color: #BF5FFF;
 }
