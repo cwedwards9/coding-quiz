@@ -16,6 +16,7 @@
         $("#startScreen").hide();
         $("#scoresDisplay").show();
 
+        // populate scores list with any previously saved scores
         $("#scoresList").empty();
         for(var i = 0; i < allScores.length; i++){
             $("#scoresList").append("<p>" + allScores[i].name + " - " + allScores[i].score + "</p>");
@@ -141,10 +142,10 @@
             allScores.push(newScore);
 
             // sort scores by highest to lowest
-            var newAllScores = allScores.sort(function(a, b){
+            var sortedScores = allScores.sort(function(a, b){
                 return b.score - a.score;
             });
-            allScores = newAllScores;
+            allScores = sortedScores;
 
             localStorage.setItem("allScores", JSON.stringify(allScores));
             
