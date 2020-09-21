@@ -57,7 +57,7 @@
     $("#submitPlayerScore").on("click", function(){
         
         // prevent user from entering empty field
-        if($("#userInitials").val().trim() === ""){
+        if($("#userInitials").val() === "" || $("#userInitials").val().trim().length > 3){
             alert("Please enter your initials!")
             return;
         }
@@ -74,7 +74,8 @@
         $("#scoresList").empty();
 
         localStorage.clear();
-    })
+        allScores = [];
+    });
 
 
     // clicking the back button on the scores list takes you back to the start screen
@@ -139,29 +140,26 @@
         // select current user score
         var userInitials = $("#userInitials").val().trim();
 
-        if(userInitials !== "" && userInitials.length < 3){
-            var newScore = {
-                name: userInitials, 
-                score: userScore
-            };
+        var newScore = {
+            name: userInitials, 
+            score: userScore
+        };
             
-            // push new user score into all scores array and save to local storage
-            allScores.push(newScore);
+        // push new user score into all scores array and save to local storage
+        allScores.push(newScore);
 
-            // sort scores by highest to lowest
-            var sortedScores = allScores.sort(function(a, b){
-                return b.score - a.score;
-            });
-            allScores = sortedScores;
+        // sort scores by highest to lowest
+        var sortedScores = allScores.sort(function(a, b){
+            return b.score - a.score;
+        });
+        allScores = sortedScores;
 
-            localStorage.setItem("allScores", JSON.stringify(allScores));
+        localStorage.setItem("allScores", JSON.stringify(allScores));
             
-            // remove all existing scores but then repopulate with new current score
-            $("#scoresList").empty();
-            for(var i = 0; i < allScores.length; i++){
-                $("#scoresList").append("<p>" + allScores[i].name + " - " + allScores[i].score + "</p>");
-            }
-            
+        // remove all existing scores but then repopulate with new current score
+        $("#scoresList").empty();
+        for(var i = 0; i < allScores.length; i++){
+            $("#scoresList").append("<p>" + allScores[i].name + " - " + allScores[i].score + "</p>");
         }
     }
 
