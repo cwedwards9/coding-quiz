@@ -55,6 +55,13 @@
 
     // clicking the submit button submits score to the leaderboards
     $("#submitPlayerScore").on("click", function(){
+        
+        // prevent user from entering empty field
+        if($("#userInitials").val().trim() === ""){
+            alert("Please enter your initials!")
+            return;
+        }
+        
         $("#doneDisplay").hide();
         $("#scoresDisplay").show();
 
