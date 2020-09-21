@@ -139,6 +139,13 @@
             
             // push new user score into all scores array and save to local storage
             allScores.push(newScore);
+
+            // sort scores by highest to lowest
+            var newAllScores = allScores.sort(function(a, b){
+                return b.score - a.score;
+            });
+            allScores = newAllScores;
+
             localStorage.setItem("allScores", JSON.stringify(allScores));
             
             // remove all existing scores but then repopulate with new current score
@@ -168,6 +175,7 @@
             $("#timerCount").text(timerNum);
 
             if(timerNum <= 0 || questionIndex > 9){
+                $("#timerCount").text(0);
                 clearInterval(timerId);
                 finishGame();
             }
